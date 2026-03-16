@@ -20,7 +20,7 @@
 
       FILE* fichier = fopen("consigne.txt","r");
       if (fichier != NULL){
-         if (fscanf(fichier,"%f",&thermostat_f) != 1) {
+         if (fscanf(fichier," %f",&thermostat_f) != 1) {
             thermostat_f = thermostatPrec_f;
          }
          fclose(fichier);
