@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include<windows.h>
+#include <windows.h>  
 
-#include "simulateur.h"
+#include <unistd.h> 
 /**
 #include "consigne.h"
 #include "regulation.h"
@@ -23,9 +23,9 @@ int main(){
 	struct simParam_s*  monSimulateur = simConstruct(temperature); // creation du simulateur, puissance intialisé
     // programme qui s'arrete quand la température intérieure s'approche de la température extérieure
 	while(temperature.interieure - temperature.exterieure >= 0.5 ){
-        temperature = simCalc(cmd,monSimulateur); // calcule de la température grâce à la commande en % du chauffage via simCalc
-		printf("int %f, ext %f\n", temperature.exterieure, temperature.interieure);
-		usleep(40000);
+    	temperature = simCalc(cmd, monSimulateur);
+    	printf("int %f, ext %f\n", temperature.exterieure, temperature.interieure);
+    	usleep(40000);  
 	}
 	
 	printf("Il ne reste plus qu'a allumer le chauffage !\n");
