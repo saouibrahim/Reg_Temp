@@ -5,6 +5,6 @@
 #include <stdlib.h>        
 #include "define.h"        // Accès à KP, KI, KD, dt, temp_t
 
-float regulationTest(int regul, float consigne, float* tabT, int nT);  
+float regulationTest(int regul, float csgn, float* tabT, int nT);  
 
 #endif
