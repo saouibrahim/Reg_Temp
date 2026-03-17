@@ -14,7 +14,6 @@ int main() {
     float maConsigne = 19.0;
     float commande = 0.0;
     int regul = 2;
-
     int nT = 0;
     float tabT[10000];
 
