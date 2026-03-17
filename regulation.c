@@ -3,7 +3,7 @@
     #include "regulation.h"
 	#include "define.h"
 	 
-	float regulationTest(int regul,float consigne,float* tabT, int nT){
+	float regulationTest(int regul,float csgn,float* tabT, int nT){
 		float cmd = 0;
 
 		if (nT <= 0 || tabT == NULL){ // pas de température et tableau de température vide
@@ -13,7 +13,7 @@
 		
 		// MODE 1 : TOUT OU RIEN
 		if (regul == 1){
-			if (tabT[nT-1] < consigne){ // si température précédente < consigne
+			if (tabT[nT-1] < csgn){ // si température précédente < consigne
 				cmd = 50; // on chauffe 
 			}
 			else{ // si température > consigne 
@@ -25,7 +25,7 @@
 		else if (regul == 2){
 			static float erreur_prec = 0.0;
 
-			float erreur = consigne - tabT[nT-1]; // erreur actuelle
+			float erreur = csgn - tabT[nT-1]; // erreur actuelle
 
 			float intermedI = ((((erreur - erreur_prec) * dt) / 2.0) + (erreur_prec * dt));
 			float intermedD = ((erreur - erreur_prec) / dt);
