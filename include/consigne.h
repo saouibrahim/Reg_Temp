@@ -5,6 +5,6 @@
 #include <stdlib.h>
 #include "define.h" 
 
-float consigne(float thermostatPrec_f);
+float consigne(float csgn);
 
 #endif

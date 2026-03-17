@@ -26,7 +26,7 @@
          fclose(fichier);
       }
       remove(".verrouConsigne");
-      return thermostat_f;
+      return csgn;
    }
    
    
