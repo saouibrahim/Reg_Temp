@@ -4,10 +4,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-	float interieure;
+typedef struct
+{
 	float exterieure;
-}temp_t;
+	float interieure;
+} temp_t;
 
 #define KP 1.1
 #define KI 0.2
