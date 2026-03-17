@@ -12,3 +12,4 @@ $(EXEC): $(OBJ)
 
 clean:
 	rm -f *.o $(EXEC)
+	
