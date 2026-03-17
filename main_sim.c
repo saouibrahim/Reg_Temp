@@ -33,7 +33,7 @@ int main() {
 
         tabT[nT] = maTemp.interieure;
         nT++;
-
+float err = 0;
         commande = regulationTest(regul, maConsigne, tabT, nT);
         maTemp = simCalc(commande, monSimulateur);
 

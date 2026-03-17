@@ -1,5 +1,6 @@
 #include "regulation.h"
 
+
 static float regulation_1ou0(float csgn, float temperature_int)
 {
 	float cmd = 0;
@@ -16,16 +17,26 @@ static float regulation_1ou0(float csgn, float temperature_int)
 	return cmd;
 }
 
-static float regulation_PID(float csgn, float temperature_int, float erreur_prec)
+static float regulation_PID(float csgn, float temperature_int, float *erreur_prec, float *int_prec, bool *isFirst)
 {
+    float intermedI;
+	float intermedD;
+    
 	float erreur = csgn - temperature_int; // erreur actuelle
-
-	float intermedI = ((((erreur - erreur_prec) * dt) / 2.0) + (erreur_prec * dt));
-	float intermedD = ((erreur - erreur_prec) / dt);
-
+    
+    if(*isFirst){
+	    intermedI = 0;
+	    intermedD = 0;
+	} 
+	else {
+	    intermedI = *int_prec + ((((erreur - *erreur_prec)/dt) * 2.0) + (*erreur_prec * dt));
+	    intermedD = ((erreur - *erreur_prec) / dt);
+	}
+    
 	float P = KP * erreur;	  // proportionnel
 	float I = KI * intermedI; // intégral
 	float D = KD * intermedD; // dérivé
+	
 
 	float cmd = P + I + D;
 
@@ -39,16 +50,21 @@ static float regulation_PID(float csgn, float temperature_int, float erreur_prec
 		cmd = 0;
 	}
 
-	erreur_prec += erreur; // l'erreur actuelle devient l'erreur précédent pour le prochain calcul
+	*erreur_prec = erreur; // l'erreur actuelle devient l'erreur précédent pour le prochain calcul
+	*int_prec = intermedI;
 
 	return cmd;
 }
 
+
 float regulationTest(int regul, float csgn, float *tabT, int nT)
 {
 
-	static float erreur_prec = 0.0;
 	float cmd = 0;
+	float err = 0;
+	float int_avant = 0;
+	bool isFirst;
+	
 
 	if (nT <= 0 || tabT == NULL)
 	{ // pas de température et tableau de température vide
@@ -65,7 +81,14 @@ float regulationTest(int regul, float csgn, float *tabT, int nT)
 	// MODE 2 : PID
 	else if (regul == 2)
 	{
-		cmd = regulation_PID(csgn, tabT[nT - 1], erreur_prec);
+	    for(int i=0; i<nT; i++){
+	        if (i == 0){
+	            isFirst = true;
+	            cmd = regulation_PID(csgn, tabT[i], &err, &int_avant, &isFirst);
+	        }
+	        isFirst = false;
+	        cmd = regulation_PID(csgn, tabT[i], &err, &int_avant, &isFirst);
+	    }
 	}
 
 	else
@@ -75,3 +98,5 @@ float regulationTest(int regul, float csgn, float *tabT, int nT)
 
 	return cmd;
 }
+
+
