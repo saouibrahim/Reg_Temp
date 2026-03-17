@@ -10,6 +10,13 @@ typedef struct
 	float interieure;
 } temp_t;
 
+typedef struct
+{
+	int initFlag;	 // drapeau initialisation
+	float erreur;	 // precedente erreur
+	float integrale; // precedente integrale
+} prec_t;
+
 #define KP 1.1
 #define KI 0.2
 #define KD 0.15
