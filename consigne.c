@@ -1,5 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "consigne.h"
 
    float consigne(float csgn){
