@@ -7,7 +7,9 @@
 typedef struct {
 	float interieure;
 	float exterieure;
-}temp_t;
+}
+
+temp_t;
 
 #define KP 1.1
 #define KI 0.2

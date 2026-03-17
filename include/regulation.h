@@ -1,5 +1,10 @@
-    #include <stdio.h>
-	#include <stdlib.h>
-	#include "define.h" 
-    
-   float regulationTest(int regul,float consigne,float* tabT, int nT);
+#ifndef REGULATION_H       
+#define REGULATION_H
+
+#include <stdio.h>         
+#include <stdlib.h>        
+#include "define.h"        // Accès à KP, KI, KD, dt, temp_t
+
+float regulationTest(int regul, float consigne, float* tabT, int nT);  
+
+#endif
