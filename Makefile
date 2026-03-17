@@ -1,6 +1,6 @@
 CC = gcc
 EXEC = simulation.exe
-OBJ = main_sim.o consigne.o regulation.o visualisationT.o visualisationC.o simulateur.o
+OBJ = main.o consigne.o regulation.o visualisationT.o visualisationC.o simulateur.o
 
 all: $(EXEC)
 
