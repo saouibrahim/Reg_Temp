@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -I./include
 EXEC = simulation.exe
-OBJ = main.o consigne.o regulation.o visualisationT.o visualisationC.o simulateur.o
+OBJ = main_sim.o consigne.o regulation.o visualisationT.o visualisationC.o simulateur.o
 
 all: $(EXEC)
 
