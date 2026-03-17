@@ -9,12 +9,12 @@
       FILE* verrou = fopen(".verrouConsigne","r");
       if (verrou != NULL){
          fclose(verrou);
-         return thermostat_f;
+         return csgn;
       }
 
       verrou = fopen(".verrouConsigne","w");
       if (verrou == NULL){
-         return thermostat_f;
+         return csgn;
       }
       fclose(verrou);
 
@@ -26,7 +26,8 @@
          fclose(fichier);
       }
       remove(".verrouConsigne");
-      return csgn;
+      return thermostat_f;
    }
+   
    
    
