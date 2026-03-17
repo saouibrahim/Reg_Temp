@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "consigne.h"
 
-   float consigne(float thermostatPrec_f){
+   float consigne(float csgn){
 
-      float thermostat_f = thermostatPrec_f;
+      float thermostat_f = csgn;
 
       FILE* verrou = fopen(".verrouConsigne","r");
       if (verrou != NULL){
@@ -21,12 +21,12 @@
       FILE* fichier = fopen("consigne.txt","r");
       if (fichier != NULL){
          if (fscanf(fichier," %f",&thermostat_f) != 1) {
-            thermostat_f = thermostatPrec_f;
+            thermostat_f = csgn;
          }
          fclose(fichier);
       }
       remove(".verrouConsigne");
-      return thermostat_f;
+      return csgn;
    }
    
    
