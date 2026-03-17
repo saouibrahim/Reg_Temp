@@ -1,7 +1,7 @@
     #include <stdio.h>
 	#include <stdlib.h>
     #include "regulation.h"
-	#include "define.>h"
+	#include "define.h"
 	 
 	float regulationTest(int regul,float consigne,float* tabT, int nT){
 		float cmd = 0;
@@ -27,8 +27,8 @@
 
 			float erreur = consigne - tabT[nT-1]; // erreur actuelle
 
-			float intermedI = ((((erreur - erreur_prec) * dt) / 2.0f) + (erreur_prec * dt));
-			float intermedD = ((erreur - erreur_prec) / DT);
+			float intermedI = ((((erreur - erreur_prec) * dt) / 2.0) + (erreur_prec * dt));
+			float intermedD = ((erreur - erreur_prec) / dt);
 
 			float P = KP*erreur; // proportionnel
 			float I = KI*intermedI; // intégral
@@ -36,7 +36,7 @@
 
 			cmd = P+I+D;
 
-			// si cmd ne se situe plus entre 0 et 100 (sécurité)
+			// sécurité : si cmd ne se situe plus entre 0 et 100 
 			if (cmd>100){
 				cmd = 100;
 			}
@@ -48,7 +48,7 @@
 		}
 
 		else{
-			printf("Erreur ! Veuillez selectionner 1 pour un mode de chauffage tout ou rien ou 2 pour le mode de chauffage par PID.")
+			printf("Erreur ! Veuillez selectionner 1 pour un mode de chauffage tout ou rien ou 2 pour le mode de chauffage par PID.");
 		}
 
 		return cmd;
