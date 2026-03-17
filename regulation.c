@@ -1,9 +1,5 @@
-    #include <stdio.h>
-	#include <stdlib.h>
     #include "regulation.h"
-	#include "define.h"
-	 
-
+	
 	static float regulation_1ou0(float csgn,float temperature_int){
 		float cmd = 0;
 
