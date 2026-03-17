@@ -16,10 +16,8 @@ static float regulation_1ou0(float csgn, float temperature_int)
 	return cmd;
 }
 
-static float regulation_PID(float csgn, float temperature_int)
+static float regulation_PID(float csgn, float temperature_int, float erreur_prec)
 {
-	static float erreur_prec = 0.0;
-
 	float erreur = csgn - temperature_int; // erreur actuelle
 
 	float intermedI = ((((erreur - erreur_prec) * dt) / 2.0) + (erreur_prec * dt));
@@ -41,13 +39,15 @@ static float regulation_PID(float csgn, float temperature_int)
 		cmd = 0;
 	}
 
-	erreur_prec = erreur; // l'erreur actuelle devient l'erreur précédent pour le prochain calcul
+	erreur_prec += erreur; // l'erreur actuelle devient l'erreur précédent pour le prochain calcul
 
 	return cmd;
 }
 
 float regulationTest(int regul, float csgn, float *tabT, int nT)
 {
+
+	static float erreur_prec = 0.0;
 	float cmd = 0;
 
 	if (nT <= 0 || tabT == NULL)
@@ -65,7 +65,7 @@ float regulationTest(int regul, float csgn, float *tabT, int nT)
 	// MODE 2 : PID
 	else if (regul == 2)
 	{
-		cmd = regulation_PID(csgn, tabT[nT - 1]);
+		cmd = regulation_PID(csgn, tabT[nT - 1], erreur_prec);
 	}
 
 	else
