@@ -10,12 +10,12 @@
 #include "simulateur.h"
 
 int main() {
-    temp_t maTemp = {15.0, 10.0};
-    float maConsigne = 19.0;
-    float commande = 0.0;
-    int regul = 2;
-    int nT = 0;
-    float tabT[10000];
+    temp_t maTemp = {15.0, 10.0}; // temp int et ext
+    float maConsigne = 19.0; // temp voulue
+    float commande = 0.0; // puiss de chauffage
+    int regul = 2; // ToutouRien ou PID
+    int nT = 0; // nb de temp enregistrées
+    float tabT[10000]; // tab des temps
 
     struct simParam_s* monSimulateur = simConstruct(maTemp);
 
@@ -24,10 +24,11 @@ int main() {
     while (1) {
         maConsigne = consigne(maConsigne);
 
+        // si la temp est inf à 5deg
         if (maConsigne <= 5.0) {
             commande = 0.0;
             visualisationC(commande);
-            printf("Consigne à 5°C : Arrêt du chauffage et fin du programme.\n");
+            printf("Consigne à 5°C, le chauffage s'arrête. Fin de programme.\n");
             break;
         }
 
