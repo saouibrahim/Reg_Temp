@@ -16,7 +16,7 @@ void commande(float *puissance, FT_HANDLE ftHandle)
     }
 
     // conversion PUISS (0 à 127) en 0% à 100%
-    unsigned char PUIS = (unsigned char)((*puissance / 127) * 100);
+    unsigned char PUIS = (unsigned char)(puissance);
     unsigned char octet_commande = PUIS;
 
     // Envoi via USB et vérif du résultat, dispo sur la documentation de la bibliothèque FTD2XX
