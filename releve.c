@@ -74,7 +74,7 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
             // Only assign if all 3 bytes of each sensor were received
             if (ext_found == 0x7)
             {
-                temperature->exterieure = sot_ext / 100.0f;
+                temperature->exterieure = -39.64 + (0.04 * sot_ext);
             }
             else
             {
@@ -83,14 +83,12 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
 
             if (int_found == 0x7)
             {
-                temperature->interieure = sot_int / 100.0f;
+                temperature->interieure = -39.64 + (0.04 * sot_int);
             }
             else
             {
                 printf("Incomplete interior temperature data (found mask: 0x%X)\n", int_found);
             }
-
-            return;
         }
         else
         {

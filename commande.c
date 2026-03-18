@@ -15,9 +15,8 @@ void commande(float *puissance, FT_HANDLE ftHandle)
         *puissance = 0;
     }
 
-    // conversion PUISS (0 à 127) en 0% à 100%
-    unsigned char PUIS = (unsigned char)((*puissance / 127) * 100);
-    unsigned char octet_commande = PUIS;
+    // conversion PUISS (0 à 127) en 0% à 100%, il n'ya pas besoin enfaite c directement en percentage
+    unsigned char octet_commande = (unsigned char)((*puissance * 127) / 100);
 
     // Envoi via USB et vérif du résultat, dispo sur la documentation de la bibliothèque FTD2XX
     DWORD BytesWritten;

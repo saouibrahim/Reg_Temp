@@ -78,7 +78,9 @@ int main()
         printf("Consigne: %.2f C | Int: %.2f C | Ext: %.2f C | Cmd: %.1f%%\n",
                maConsigne, maTemp.interieure, maTemp.exterieure, puis);
 
-        sleep(2);
+        FT_Purge(ftHandle, FT_PURGE_RX | FT_PURGE_TX);
+
+        sleep(1);
     }
 
     FT_Close(ftHandle);
