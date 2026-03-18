@@ -1,6 +1,6 @@
 #include "include/regulation.h"
 
-static float regulation_1ou0(float csgn, float temperature_int)
+float regulation_1ou0(float csgn, float temperature_int)
 {
 	float cmd = 0;
 	if (temperature_int < csgn)
@@ -14,7 +14,7 @@ static float regulation_1ou0(float csgn, float temperature_int)
 	return cmd;
 }
 
-static float regulation_PID(float csgn, float temperature_int, float *erreur_prec, float *int_prec, bool *isFirst)
+float regulation_PID(float csgn, float temperature_int, float *erreur_prec, float *int_prec, bool *isFirst)
 {
 	float intermedI;
 	float intermedD;
