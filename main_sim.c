@@ -52,3 +52,4 @@ int main()
 
     simDestruct(monSimulateur);
     return 0;
+}
