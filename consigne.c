@@ -5,6 +5,7 @@ float consigne(float csgn)
 
    float thermostat_f = csgn;
 
+   // Check for lock file to prevent simultaneous access
    FILE *verrou = fopen(".verrouConsigne", "r");
    if (verrou != NULL)
    {
@@ -12,6 +13,7 @@ float consigne(float csgn)
       return csgn;
    }
 
+   // Create lock file to indicate we're reading the consigne
    verrou = fopen(".verrouConsigne", "w");
    if (verrou == NULL)
    {
@@ -19,6 +21,7 @@ float consigne(float csgn)
    }
    fclose(verrou);
 
+   // Read the consigne value from the file
    FILE *fichier = fopen("consigne.txt", "r");
    if (fichier != NULL)
    {

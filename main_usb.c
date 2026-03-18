@@ -16,6 +16,7 @@ int main()
     FT_HANDLE ftHandle = NULL; // void* — no extra star needed
     FT_STATUS ftStatus;        // unsigned long — no star needed
 
+    // connect to the stm32
     ftStatus = FT_Open(0, &ftHandle);
     if (ftStatus != FT_OK)
     {
@@ -24,6 +25,7 @@ int main()
     }
     printf("Peripherique USB ouvert avec succes.\n");
 
+    // set the params correctly
     FT_SetBaudRate(ftHandle, 115200);
     FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1,
                               FT_PARITY_NONE);
@@ -43,11 +45,14 @@ int main()
 
     while (1)
     {
+
+        // get the Text and Tint
         releve(&maTemp, ftHandle);
 
+        // mettre a jour notre var laConsigne egale a la valeur voulu dans consigne.txt
         maConsigne = consigne(maConsigne);
 
-        if (maConsigne <= 5.0)
+        if (maConsigne <= 5.0) // arreté le programme
         {
             puis = 0.0;
             commande(&puis, ftHandle);
@@ -56,11 +61,11 @@ int main()
             break;
         }
 
-        if (regul == 1)
+        if (regul == 1) // regulation tout ou rien
         {
             puis = regulation_1ou0(maConsigne, maTemp.interieure);
         }
-        else if (regul == 2)
+        else if (regul == 2) // regulation PID
         {
             puis = regulation_PID(maConsigne, maTemp.interieure, &erreur_prec, &int_prec, &isFirst);
             isFirst = false;
@@ -71,16 +76,21 @@ int main()
             puis = 0.0;
         }
 
+        // envoyer la commande de puissance au stm32
         commande(&puis, ftHandle);
+
+        // mettre a jour les fichiers de visualisation pour le gestiontemp.exe
         visualisationT(&maTemp);
         visualisationC(puis);
 
+        // afficher les infos dans la console
         printf("Consigne: %.2f C | Int: %.2f C | Ext: %.2f C | Cmd: %.1f%%\n",
                maConsigne, maTemp.interieure, maTemp.exterieure, puis);
 
+        // effacer les bufferrs de reception et d'emission pour eviter les debordements
         FT_Purge(ftHandle, FT_PURGE_RX | FT_PURGE_TX);
 
-        sleep(1);
+        sleep(1); // 1s
     }
 
     FT_Close(ftHandle);
