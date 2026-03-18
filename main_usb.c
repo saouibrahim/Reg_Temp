@@ -24,6 +24,12 @@ int main()
     }
     printf("Peripherique USB ouvert avec succes.\n");
 
+    FT_SetBaudRate(ftHandle, 115200);
+    FT_SetDataCharacteristics(ftHandle, FT_BITS_8, FT_STOP_BITS_1,
+                              FT_PARITY_NONE);
+    FT_SetFlowControl(ftHandle, FT_FLOW_RTS_CTS, 0x11, 0x13);
+    FT_SetFlowControl(ftHandle, FT_FLOW_NONE, 0, 0);
+
     temp_t maTemp = {.interieure = 0.0, .exterieure = 0.0};
     float maConsigne = 19.0;
     float puis = 0.0;
@@ -72,7 +78,7 @@ int main()
         printf("Consigne: %.2f C | Int: %.2f C | Ext: %.2f C | Cmd: %.1f%%\n",
                maConsigne, maTemp.interieure, maTemp.exterieure, puis);
 
-        sleep(1);
+        sleep(2);
     }
 
     FT_Close(ftHandle);
