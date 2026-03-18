@@ -1,6 +1,6 @@
 #include "visualisationT.h"
 
-void visualisationT(temp_t maTemperature)
+void visualisationT(temp_t *maTemperature)
 {
     FILE *file;
 
@@ -16,8 +16,8 @@ void visualisationT(temp_t maTemperature)
 
         file = fopen("data.txt", "w");
         fputs(heaterState, file);
-        fprintf(file, "%.2f\n", maTemperature.interieure);
-        fprintf(file, "%.2f\n", maTemperature.exterieure);
+        fprintf(file, "%.2f\n", maTemperature->interieure);
+        fprintf(file, "%.2f\n", maTemperature->exterieure);
         fclose(file);
 
         remove(".verrouData");
