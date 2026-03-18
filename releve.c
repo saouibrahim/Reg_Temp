@@ -19,12 +19,19 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
         {
 
             // FT_Read OK
-            printf("Read OK — Bytes received: %lu\n", BytesReceived);
+            printf("Read OK | Bytes received: %lu\n", BytesReceived);
 
             __int16 sot_ext = 0;
             __int16 sot_int = 0;
             __int8 ext_found = 0; // bitmask: bit0=byte1 found, bit1=byte2, bit2=byte3
             __int8 int_found = 0; // idem here,, also bitmask for bit 0 found etc...
+
+            printf("Raw bytes: ");
+            for (int i = 0; i < 6; i++)
+            {
+                printf("0x%02X ", (unsigned char)RxBuffer[i]);
+            }
+            printf("\n");
 
             for (int i = 0; i < 6; i++)
             {
@@ -67,7 +74,7 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
             // Only assign if all 3 bytes of each sensor were received
             if (ext_found == 0x7)
             {
-                temperature->exterieure = sot_ext;
+                temperature->exterieure = sot_ext / 100.0f;
             }
             else
             {
@@ -76,7 +83,7 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
 
             if (int_found == 0x7)
             {
-                temperature->interieure = sot_int;
+                temperature->interieure = sot_int / 100.0f;
             }
             else
             {
