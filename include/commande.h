@@ -5,6 +5,6 @@
 #include <stdio.h>
 #include "ftd2xx.h"
 
-void commande(float puissance, FT_HANDLE ftHandle);
+void commande(float *puissance, FT_HANDLE ftHandle);
 
 #endif

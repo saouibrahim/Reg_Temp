@@ -1,22 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <stdbool.h>
 
-#include "define.h"
-#include "consigne.h"
-#include "regulation.h"
-#include "visualisationT.h"
-#include "visualisationC.h"
-#include "simulateur.h"
+#include "include/define.h"
+#include "include/consigne.h"
+#include "include/regulation.h"
+#include "include/visualisationT.h"
+#include "include/visualisationC.h"
+#include "include/simulateur.h"
 
 int main()
 {
-    temp_t maTemp = {15.0, 10.0}; // temp int et ext
-    float maConsigne = 19.0;      // temp voulue
-    float commande = 0.0;         // puiss de chauffage
-    int regul = 2;                // ToutouRien ou PID
-    int nT = 0;                   // nb de temp enregistrées
-    float tabT[10000];            // tab des temps
+    temp_t maTemp = {.interieure = 15.0, .exterieure = 10.0};
+    float maConsigne = 19.0;
+    float commande = 0.0;
+    int regul = 2; // 1 = tout ou rien, 2 = PID
+
+    // PID persistent state
+    float erreur_prec = 0.0;
+    float int_prec = 0.0;
+    bool isFirst = true;
 
     struct simParam_s *monSimulateur = simConstruct(maTemp);
 
@@ -24,32 +28,47 @@ int main()
 
     while (1)
     {
+        // Update setpoint from file if changed
         maConsigne = consigne(maConsigne);
 
-        // si la temp est inf à 5deg
+        // Safety stop if setpoint drops to or below 5°C
         if (maConsigne <= 5.0)
         {
             commande = 0.0;
             visualisationC(commande);
-            printf("Consigne à 5°C, le chauffage s'arrête. Fin de programme.\n");
+            printf("Consigne à %.1f°C (<= 5°C), arrêt du chauffage. Fin de programme.\n", maConsigne);
             break;
         }
 
-        if (nT < 10000)
+        // Compute command depending on chosen regulation mode
+        if (regul == 1)
         {
-            tabT[nT] = maTemp.interieure;
-            nT++;
+            commande = regulation_1ou0(maConsigne, maTemp.interieure);
+        }
+        else if (regul == 2)
+        {
+            commande = regulation_PID(maConsigne, maTemp.interieure, &erreur_prec, &int_prec, &isFirst);
+            isFirst = false;
+        }
+        else
+        {
+            printf("Mode de régulation invalide (%d). Utiliser 1 (tout-ou-rien) ou 2 (PID).\n", regul);
+            commande = 0.0;
         }
 
-        commande = regulationTest(regul, maConsigne, tabT, nT);
+        // Simulate the thermal system (replaces STM32 hardware)
         maTemp = simCalc(commande, monSimulateur);
 
-        visualisationT(maTemp);
+        // Update visualisation files
+        visualisationT(&maTemp);
         visualisationC(commande);
+
+        printf("Consigne: %.2f°C | Int: %.2f°C | Ext: %.2f°C | Cmd: %.1f%%\n",
+               maConsigne, maTemp.interieure, maTemp.exterieure, commande);
 
         sleep(1);
     }
 
     simDestruct(monSimulateur);
-    return 0;
+    return EXIT_SUCCESS;
 }
