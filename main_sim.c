@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>     
+#include <unistd.h>
 
 #include "define.h"
 #include "consigne.h"
@@ -31,16 +31,18 @@ int main() {
             break;
         }
 
-        tabT[nT] = maTemp.interieure;
-        nT++;
-float err = 0;
+        if (nT < 10000) {
+            tabT[nT] = maTemp.interieure;
+            nT++;
+        }
+
         commande = regulationTest(regul, maConsigne, tabT, nT);
         maTemp = simCalc(commande, monSimulateur);
 
         visualisationT(maTemp);
         visualisationC(commande);
 
-        sleep(1); 
+        sleep(1);
     }
 
     simDestruct(monSimulateur);
