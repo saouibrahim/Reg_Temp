@@ -15,6 +15,4 @@ typedef struct
 #define KD 0.15
 #define dt 10.0
 
-float err; // c'est l'erreur (n-1) dans la regulation
-
 #endif
