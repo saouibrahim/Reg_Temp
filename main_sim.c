@@ -60,7 +60,7 @@ int main()
         maTemp = simCalc(commande, monSimulateur);
 
         // Update visualisation files
-        visualisationT(&maTemp);
+        visualisationT(maTemp);
         visualisationC(commande);
 
         printf("Consigne: %.2f C | Int: %.2f C | Ext: %.2f C | Cmd: %.1f%%\n",

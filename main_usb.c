@@ -80,7 +80,7 @@ int main()
         commande(&puis, ftHandle);
 
         // mettre a jour les fichiers de visualisation pour le gestiontemp.exe
-        visualisationT(&maTemp);
+        visualisationT(maTemp);
         visualisationC(puis);
 
         // afficher les infos dans la console
