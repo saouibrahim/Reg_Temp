@@ -51,7 +51,7 @@ int main()
             puis = 0.0;
             commande(&puis, ftHandle);
             visualisationC(puis);
-            printf("Consigne à %.1f°C (<= 5°C), arrêt du chauffage. Fin de programme.\n", maConsigne);
+            printf("Consigne à %.1f C (<= 5 C), arrêt du chauffage. Fin de programme.\n", maConsigne);
             break;
         }
 
@@ -78,7 +78,7 @@ int main()
         visualisationT(&maTemp);
         visualisationC(puis);
 
-        printf("Consigne: %.2f°C | Int: %.2f°C | Ext: %.2f°C | Cmd: %.1f%%\n",
+        printf("Consigne: %.2f C | Int: %.2f C | Ext: %.2f C | Cmd: %.1f%%\n",
                maConsigne, maTemp.interieure, maTemp.exterieure, puis);
 
         sleep(1);
