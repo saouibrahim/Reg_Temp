@@ -82,6 +82,8 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
             {
                 printf("Incomplete interior temperature data (found mask: 0x%X)\n", int_found);
             }
+
+            return;
         }
         else
         {
