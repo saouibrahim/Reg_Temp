@@ -7,6 +7,6 @@
 #include <string.h>
 #include "define.h"
 
-void visualisationT(temp_t maTemperature);
+void visualisationT(temp_t *maTemperature);
 
 #endif
