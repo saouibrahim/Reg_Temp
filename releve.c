@@ -1,5 +1,11 @@
 #include "include/releve.h"
 
+DWORD RxBytes;
+DWORD TxBytes;
+DWORD EventDWord;
+DWORD BytesReceived;
+char RxBuffer[6];
+
 void releve(temp_t *temperature, FT_HANDLE ftHandle)
 {
     FT_STATUS ftStatus = FT_Open(0, &ftHandle);
@@ -19,7 +25,7 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
         {
 
             // FT_Read OK
-            pprintf("Read OK — Bytes received: %lu\n", BytesReceived);
+            printf("Read OK — Bytes received: %lu\n", BytesReceived);
 
             __int16 sot_ext = 0;
             __int16 sot_int = 0;

@@ -16,7 +16,7 @@ sim.exe: $(SIM_OBJ) # the full command to build sim.exe from all the object file
 	$(CC) $(SIM_OBJ) -o sim.exe 
 
 usb.exe: $(USB_OBJ) # idem
-	$(CC) $(USB_OBJ) -o usb.exe -lftd2xx
+	$(CC) $(USB_OBJ) -o usb.exe ftd2xx.lib
 
 
 %.o: %.c # a pattern rule that handles the compilation of .c files to .o files, first pre requisite is the .c file, the target is the .o, CFLAGS is teh -I./include
