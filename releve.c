@@ -8,21 +8,14 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
     DWORD EventDWord;
     DWORD BytesReceived;
     char RxBuffer[6]; // Buffer for exactly 6 bytes, where 3 are for the Tint and 3 for the Text
-
-    FT_STATUS ftStatus = FT_Open(0, &ftHandle);
-    if (ftStatus != FT_OK)
-    {
-        // FT_Open failed
-        printf("FT_Open failed: %d\n", ftStatus);
-        return;
-    }
+    static FT_STATUS statusRead;
 
     // Check how many bytes are waiting in the receive queue
     FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
     if (RxBytes >= sizeof(RxBuffer))
     {
-        ftStatus = FT_Read(ftHandle, RxBuffer, sizeof(RxBuffer), &BytesReceived); // read 2 Bytes and put it into the buffer
-        if (ftStatus == FT_OK)
+        statusRead = FT_Read(ftHandle, RxBuffer, sizeof(RxBuffer), &BytesReceived); // read 2 Bytes and put it into the buffer
+        if (statusRead == FT_OK)
         {
 
             // FT_Read OK
@@ -94,11 +87,8 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
         }
         else
         {
-            // FT_Read Failed
-            printf("FT_Read failed: %d\n", ftStatus);
-            FT_Close(ftHandle);
+            printf("FT_Read Failed: %d\n", statusRead);
             return;
         }
     }
-    FT_Close(ftHandle);
 }
