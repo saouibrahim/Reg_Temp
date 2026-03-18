@@ -15,7 +15,7 @@ void commande(float puissance, FT_HANDLE ftHandle){
     unsigned char PUIS = (unsigned char)((puissance*127)*100);
     unsigned char octet_commande = PUIS;
 
-    // Envoi via USB et vérification du résultat
+    // Envoi via USB et vérif du résultat
     DWORD BytesWritten;
     FT_STATUS status = FT_Write(ftHandle, &octet_commande, 1, &BytesWritten);
     if (status != FT_OK || BytesWritten != 1) {
