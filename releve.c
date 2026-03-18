@@ -1,13 +1,14 @@
 #include "include/releve.h"
 
-DWORD RxBytes;
-DWORD TxBytes;
-DWORD EventDWord;
-DWORD BytesReceived;
-char RxBuffer[6];
-
 void releve(temp_t *temperature, FT_HANDLE ftHandle)
 {
+
+    DWORD RxBytes;
+    DWORD TxBytes;
+    DWORD EventDWord;
+    DWORD BytesReceived;
+    char RxBuffer[6]; // Buffer for exactly 6 bytes, where 3 are for the Tint and 3 for the Text
+
     FT_STATUS ftStatus = FT_Open(0, &ftHandle);
     if (ftStatus != FT_OK)
     {
