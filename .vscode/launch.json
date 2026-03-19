@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "c:/Users/zmedy/OneDrive/Bureau/yz/PREPA/ANNEE3/LANGAGE_C/PROJET/code/Reg_Temp",
-      "program": "c:/Users/zmedy/OneDrive/Bureau/yz/PREPA/ANNEE3/LANGAGE_C/PROJET/code/Reg_Temp/build/Debug/outDebug",
+      "cwd": "a:/ISEN/25-26/langageC/Reg_Temp",
+      "program": "a:/ISEN/25-26/langageC/Reg_Temp/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
