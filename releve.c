@@ -4,12 +4,14 @@ void releve(temp_t *temperature, FT_HANDLE ftHandle)
 {
 
     DWORD RxBytes;
+    DWORD TxBytes;
     DWORD EventDWord;
     DWORD BytesReceived;
     char RxBuffer[6]; // Buffer for exactly 6 bytes, where 3 are for the Tint and 3 for the Text
     static FT_STATUS statusRead;
 
     // Check how many bytes are waiting in the receive queue
+    FT_GetStatus(ftHandle, &RxBytes, &TxBytes, &EventDWord);
     if (RxBytes >= sizeof(RxBuffer))
     {
         statusRead = FT_Read(ftHandle, RxBuffer, sizeof(RxBuffer), &BytesReceived); // read 2 Bytes and put it into the buffer
